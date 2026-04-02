@@ -1,0 +1,61 @@
+# =========================
+# Flutter / Dart
+# =========================
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# =========================
+# Android
+# =========================
+android/.gradle/
+android/local.properties
+android/**/build/
+android/.cxx/
+
+# Firebase (optional: keep or remove)
+# Uncomment if you want to ignore it
+# android/app/google-services.json
+
+# =========================
+# iOS / Web / Desktop
+# =========================
+ios/
+web/
+linux/
+macos/
+windows/
+
+# =========================
+# IDE Files
+# =========================
+.idea/
+*.iml
+.vscode/
+
+# =========================
+# Logs & Temp
+# =========================
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# =========================
+# Security Files
+# =========================
+key.properties
+**/*.keystore
+**/*.jks
+
+# =========================
+# AI / Copilot / Agents
+# =========================
+.agents/
+**/.agents/
+*.SKILL.md

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1066991300498",
+    "project_id": "vehicle-service-app-f9627",
+    "storage_bucket": "vehicle-service-app-f9627.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066991300498:android:ee64b51636e421a2d99b4b",
+        "android_client_info": {
+          "package_name": "com.example.vehicle_service_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX06FCs08X2VxEijIDC8CEu8pVC82bo5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
