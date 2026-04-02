@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../datasources/auth_remote_datasource.dart';
 
@@ -36,6 +35,4 @@ class AuthRepository {
       throw AuthFailure(error.message);
     }
   }
-
-  Stream<User?> authStateChanges() => _remoteDataSource.authStateChanges();
 }

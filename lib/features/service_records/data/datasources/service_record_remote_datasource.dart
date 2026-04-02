@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 import '../models/service_record_model.dart';
 
@@ -13,60 +12,48 @@ abstract class ServiceRecordRemoteDataSource {
   Future<void> deleteServiceRecord(String recordId);
 }
 
-class FirestoreServiceRecordRemoteDataSource
+class InMemoryServiceRecordRemoteDataSource
     implements ServiceRecordRemoteDataSource {
-  FirestoreServiceRecordRemoteDataSource({
-    required FirebaseFirestore firestore,
-    required FirebaseAuth auth,
-  }) : _firestore = firestore,
-       _auth = auth;
-
-  final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth;
-
-  CollectionReference<Map<String, dynamic>> _recordsCollection(String userId) {
-    return _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('service_records');
+  InMemoryServiceRecordRemoteDataSource()
+    : _recordsController =
+          StreamController<List<ServiceRecordModel>>.broadcast() {
+    _recordsController.add(const []);
   }
 
-  String _requireUserId() {
-    final uid = _auth.currentUser?.uid;
-    if (uid == null || uid.isEmpty) {
-      throw StateError('User is not authenticated.');
-    }
-    return uid;
+  final List<ServiceRecordModel> _records = [];
+  final StreamController<List<ServiceRecordModel>> _recordsController;
+
+  void _emitRecords() {
+    final sorted = [..._records]
+      ..sort((a, b) => b.serviceDate.compareTo(a.serviceDate));
+    _recordsController.add(sorted);
   }
 
   @override
   Stream<List<ServiceRecordModel>> watchServiceRecords() {
-    final userId = _requireUserId();
-    return _recordsCollection(
-      userId,
-    ).orderBy('serviceDate', descending: true).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        final data = doc.data();
-        return ServiceRecordModel.fromMap({...data, 'id': doc.id});
-      }).toList();
-    });
+    return _recordsController.stream;
   }
 
   @override
   Future<void> addServiceRecord(ServiceRecordModel record) async {
-    final userId = _requireUserId();
-    await _recordsCollection(userId).doc(record.id).set(record.toMap());
+    _records.add(record);
+    _emitRecords();
   }
 
   @override
   Future<void> updateServiceRecord(ServiceRecordModel record) async {
-    final userId = _requireUserId();
-    await _recordsCollection(userId).doc(record.id).update(record.toMap());
+    final index = _records.indexWhere((item) => item.id == record.id);
+    if (index == -1) {
+      return;
+    }
+
+    _records[index] = record;
+    _emitRecords();
   }
 
   @override
   Future<void> deleteServiceRecord(String recordId) async {
-    final userId = _requireUserId();
-    await _recordsCollection(userId).doc(recordId).delete();
+    _records.removeWhere((item) => item.id == recordId);
+    _emitRecords();
   }
 }
