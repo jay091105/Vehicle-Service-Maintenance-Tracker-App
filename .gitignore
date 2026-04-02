@@ -1,0 +1,61 @@
+# =========================
+# Flutter / Dart
+# =========================
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# =========================
+# Android
+# =========================
+android/.gradle/
+android/local.properties
+android/**/build/
+android/.cxx/
+
+# =========================
+# iOS / Web / Desktop (optional)
+# =========================
+ios/
+web/
+linux/
+macos/
+windows/
+
+# =========================
+# IDE Files
+# =========================
+.idea/
+*.iml
+.vscode/
+
+# =========================
+# Logs & Temp
+# =========================
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# =========================
+# Agent / AI / Copilot Junk
+# =========================
+.agents/
+**/.agents/
+*.SKILL.md
+*.md
+
+# =========================
+# Node (if used)
+# =========================
+node_modules/
+
+# =========================
+# Test Coverage
+# =========================
+coverage/
